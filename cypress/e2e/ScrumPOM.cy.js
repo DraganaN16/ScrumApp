@@ -5,6 +5,7 @@ import { loginPage } from "../page_objects/loginPage"
 import { addBoard } from "../page_objects/addBoard"
 import { editBoard} from "../page_objects/editBoard"
 import { deleteBoard} from "../page_objects/deleteBoard"
+import { commonElements } from "../page_objects/commonElements"
 
 
 let boardId;

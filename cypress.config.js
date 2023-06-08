@@ -11,7 +11,9 @@ module.exports = defineConfig({
       existingUserEmail: "draganaaa@gmail.com",
       validPassword: "pokusavam100", 
       baseApiUrl:"https://api.vivifyscrum-stage.com/api/",
-      boardName: "Proba"
+      boardName: "Proba",
+      editedBoardName: "Novo ime",
+      boardDescription: "proba"
 
     }
   },

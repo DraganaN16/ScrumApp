@@ -3,12 +3,12 @@
 import { general } from "../page_objects/general"
 import { loginPage } from "../page_objects/loginPage"
 import { addBoard } from "../page_objects/addBoard"
+import { editBoard} from "../page_objects/editBoard"
+import { deleteBoard} from "../page_objects/deleteBoard"
 
-let token;
-let userId;
+
 let boardId;
-let organization_id;
-
+//let organization_id;
 
 describe("Scrum, PO", () => {
   before(() => {
@@ -17,14 +17,28 @@ describe("Scrum, PO", () => {
     cy.clearAllSessionStorage()
   })
   
-    before('Login with valid email and password', () => {
-      //cy.loginViaApi('draganaaa@gmail.com','pokusavam100')
-      cy.visit("login")
-      cy.url().should("contain", "https://vivifyscrum-stage.com/")
+  beforeEach("Visit home page",() => {
+    cy.visit("/");
+    cy.url().should("contain", "https://vivifyscrum-stage.com/")
+    general.headerLoginTitle.should("contain","Log in with your existing account");
+  })
 
-      loginPage.loginUser(Cypress.env('existingUserEmail'), Cypress.env('validPassword'));
+    it.only('Login with valid email and password', () => {  //login ide u before!
+       cy.intercept("POST","https://api.vivifyscrum-stage.com/api/v2/login", (request)=>{
+       }).as("validLogin")
       
-      cy.wait(3000);
+      cy.visit("login")
+      cy.url().should("contain", "login");
+    // cy.loginViaApi("draganaaa@gmail.com", "pokusavam100");
+    // loginPage.loginButton.click();
+       loginPage.loginUser(Cypress.env('existingUserEmail'), Cypress.env('validPassword'));
+       general.headerTitle.should("contain", "My Organizations");
+       //cy.wait(3000);
+
+       cy.wait('@validLogin').then((request) => {
+       expect(request.response.statusCode).to.eql(200)  
+       //cy.log(JSON.stringify(request.response.statusCode))
+       })
     })
 
     // it('Create organization', ()=> {
@@ -50,7 +64,7 @@ describe("Scrum, PO", () => {
       cy.wait(3000);    
     })
  
-     it.only('Edit board', ()=> {
+     it('Edit board', ()=> {
       cy.get('a[href="/boards/${boardId}"]').first().click(); // ${boardId} 
       cy.get('a[href="/boards/href10561/settings"]').click();  
       cy.get("input[name='name']").clear().type("Novo ime")

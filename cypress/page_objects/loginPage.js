@@ -9,7 +9,7 @@ class LoginPage{
         return cy.get("button[type='submit']");
     }
 
-    loginUser(email, password){  //f-ja login radi celu akciju
+    loginUser(email = Cypress.env('existingUserEmail'), password = Cypress.env('validPassword')){  //f-ja login radi celu akciju
         this.emailInputField.type(email);
         this.passwordInputField.type(password);
         this.loginButton.click();

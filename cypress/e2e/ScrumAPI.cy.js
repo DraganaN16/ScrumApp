@@ -1,9 +1,5 @@
 /// <reference types='cypress' />
 
-import { general } from "../page_objects/general"
-import { loginPage } from "../page_objects/loginPage"
-
-let boardId;
 
 describe("loginViaApi", () => {
  it('login', ()=> {
